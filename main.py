@@ -3,7 +3,12 @@ from random import randint
 client = discord.Client()
 
 voteObjects = []
+saberInsults = ["Saber sucks", "saber sucks", "fuck saber", "Fuck saber", "Fuck Saber"]
 insults = ["'<@' + user + '>' + ' can suck a fat one'", "'Hey ' + '<@' + user + '>' + ', I fucked your mom'", "'<@' + user + '>' + ' likes dick in their ass'", "'<@' + user + '>' + ' thinks Community is a good show'", "'<@' + user + '>' + 'plays Legion jungle'", "'<@' + user + '>' + ' thinks Hannah Marchi is hot'", "'<@' + user + '>' + ' is gay'", "'<@' + user + '>' + ' jerks it to Roadhog fanfics'", "'<@' + user + '>' + ' spits on the wiener'", "'<@' + user + '>' + ', your parents must be brothers'", "'<@' + user + '>' + ', nigga u gay'", "'<@' + user + '>' + ' is a filthy casual'", "'<@' + user + '>' + ' can go fuck themselves'", "'<@' + user + '>' + ' mains Roy'", "'<@' + user + '>' + ' is a fucking faggot'", "'<@' + user + '>' ', do you get to the Cloud District very often? Oh, what am I saying, of course you dont'"]
+axelPics = ["\"https://cdn.discordapp.com/attachments/291077390187364352/352696468450050049/20160523_213317.jpg\"","\"http://imgur.com/0OabyTQ\"", "\"https://cdn.discordapp.com/attachments/291077390187364352/352692689109647361/Axel_Trap.png\""]
+davisPics = ["\"http://i.imgur.com/sk9CSqW.png\"","\"https://partymmr.com/wp-content/uploads/2017/03/dota-2-memes-am-finish-farming-945x751.png\""]
+chrisPics = ["\":EZ:\""]
+ericPics = ["\"https://www.youtube.com/watch?v=3KquFZYi6L0&ab_channel=UrielMatt\""]
 votes = {}
 class Vote:
     yes = 0
@@ -45,7 +50,22 @@ class Vote:
         await client.send_message(message.channel, "Current votes for: " + str(self.name) + "\nYes: " + str(self.yes) + "\nNo: " + str(self.no))
 
 
+async def axel(message):
+    msg = eval(axelPics[randint(0,len(axelPics)-1)]).format(message)
+    await client.send_message(message.channel, msg)
 
+async def davis(message):
+    msg = eval(davisPics[randint(0,len(davisPics)-1)]).format(message)
+    await client.send_message(message.channel, msg)
+    
+async def chris(message):
+    msg = eval(chrisPics[randint(0,len(chrisPics)-1)]).format(message)
+    await client.send_message(message.channel, msg)
+
+async def eric(message):
+    msg = eval(ericPics[randint(0,len(ericPics)-1)]).format(message)
+    await client.send_message(message.channel, msg)
+    
 
 async def insult(message, mentions):
     for user in mentions:
@@ -58,11 +78,24 @@ async def on_message(message):
     words = message.content.split()
     if message.author == client.user:
         return
-    if message.content.startswith('!hello'):
+    if message.content.startswith('~hello'):
         msg = 'Hello {0.author.mention}'.format(message)
+        await client.send_message(message.channel, msg)
+    if ("Nico" in message.content) or ("nico" in message.content):
+        await client.send_message(message.channel, "https://www.youtube.com/watch?v=96zCe-jIPYU")
+    if (saberInsults[0] in message.content) or (saberInsults[1] in message.content) or (saberInsults[2] in message.content) or (saberInsults[3] in message.content) or (saberInsults[4] in message.content): 
+        msg = 'Hey {0.author.mention}, fuck you too'.format(message)
         await client.send_message(message.channel, msg)
     if message.content.startswith('~insult'):
         await insult(message, message.raw_mentions)
+    if message.content.startswith('~axel'):
+        await axel(message)
+    if message.content.startswith('~davis'):
+        await davis(message)
+    if message.content.startswith('~chris'):
+        await chris(message)
+    if message.content.startswith('~eric'):
+        await eric(message)
     if message.content.startswith('~vote'):
         if message.content.startswith('~vote new'):
             voteName = words[2]
